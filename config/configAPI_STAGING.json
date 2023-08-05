@@ -1,0 +1,16 @@
+{
+    "reporterEnabled": "mocha-junit-reporter, mochawesome",
+    "mochaJunitReporterReporterOptions": {
+        "outputs": "true",
+        "jenkinsMode": "true",
+        "rootSuiteTitle": "API",
+        "testsuitesTitle": "{id}",
+        "mochaFile": "./Reports/STAGING/API_STAGING_{id}.xml"
+    },
+    "mochawesomeReporterOptions": {
+        "reportDir": "./Reports/STAGING",
+        "reportFilename": "API_STAGING_{id}",
+        "reportTitle": "API_STAGING",
+        "reportPageTitle": "API_STAGING"
+    }
+}

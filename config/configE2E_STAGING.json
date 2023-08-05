@@ -1,0 +1,16 @@
+{
+    "reporterEnabled": "mocha-junit-reporter, mochawesome",
+    "mochaJunitReporterReporterOptions": {
+        "outputs": "true",
+        "jenkinsMode": "true",
+        "rootSuiteTitle": "E2E",
+        "testsuitesTitle": "{id}",
+        "mochaFile": "./Reports/STAGING/E2E_QC_{id}.xml"
+    },
+    "mochawesomeReporterOptions": {
+        "reportDir": "./Reports/STAGING",
+        "reportFilename": "E2E_STAGING_{id}",
+        "reportTitle": "E2E_STAGING",
+        "reportPageTitle": "E2E_STAGING"
+    }
+}

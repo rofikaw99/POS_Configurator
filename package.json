@@ -1,0 +1,40 @@
+{
+  "name": "template",
+  "version": "2.7.2",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "qc-api": "node -e \"require('datejs'); const dateTime = Date.today().setTimeToNow().toString('yyyyMMdd_HHmmss'); require('child_process').execSync(`cross-env NODE_ENV=qc mocha --timeout 180000 ./tests_explorer/test_case/api/**/*.js --reporter mocha-multi-reporters --reporterOptions configFile=./config/configAPI_QC.json,cmrOutput=mocha-junit-reporter+testsuitesTitle+\"\"Health#Garda Healthtech\"\":mocha-junit-reporter+mochaFile+${dateTime}:mochawesome+reportFilename+${dateTime}`,{stdio: 'inherit'})\"& node ./tests_explorer/utils/xml_data_time.js",
+    "qc-e2e": "node -e \"require('datejs'); const dateTime = Date.today().setTimeToNow().toString('yyyyMMdd_HHmmss'); require('child_process').execSync(`cross-env NODE_ENV=qc mocha --timeout 180000 ./tests_explorer/test_case/e2e/**/*.js --reporter mocha-multi-reporters --reporterOptions configFile=./config/configE2E_QC.json,cmrOutput=mocha-junit-reporter+testsuitesTitle+\"\"Health#Garda Healthtech\"\":mocha-junit-reporter+mochaFile+${dateTime}:mochawesome+reportFilename+${dateTime}`,{stdio: 'inherit'})\"& node ./tests_explorer/utils/xml_data_time.js",
+    "staging-api": "node -e \"require('datejs'); const dateTime = Date.today().setTimeToNow().toString('yyyyMMdd_HHmmss'); require('child_process').execSync(`cross-env NODE_ENV=staging mocha --timeout 180000 ./tests_explorer/test_case/api/**/*.js --reporter mocha-multi-reporters --reporterOptions configFile=./config/configAPI_STAGING.json,cmrOutput=mocha-junit-reporter+testsuitesTitle+\"\"Health#Garda Healthtech\"\":mocha-junit-reporter+mochaFile+${dateTime}:mochawesome+reportFilename+${dateTime}`,{stdio: 'inherit'})\"& node ./tests_explorer/utils/xml_data_time.js",
+    "staging-e2e": "node -e \"require('datejs'); const dateTime = Date.today().setTimeToNow().toString('yyyyMMdd_HHmmss'); require('child_process').execSync(`cross-env NODE_ENV=staging mocha --timeout 180000 ./tests_explorer/test_case/e2e/**/*.js --reporter mocha-multi-reporters --reporterOptions configFile=./config/configE2E_STAGING.json,cmrOutput=mocha-junit-reporter+testsuitesTitle+\"\"Health#Garda Healthtech\"\":mocha-junit-reporter+mochaFile+${dateTime}:mochawesome+reportFilename+${dateTime}`,{stdio: 'inherit'})\"& node ./tests_explorer/utils/xml_data_time.js",
+    "qc-custom": "node -e \"require('datejs'); const dateTime = Date.today().setTimeToNow().toString('yyyyMMdd_HHmmss'); require('child_process').execSync(`cross-env NODE_ENV=qc mocha --timeout 180000 ./tests_explorer/test_case/%npm_config_testcasepath% --reporter mocha-multi-reporters --reporterOptions configFile=./config/configQC.json,cmrOutput=mocha-junit-reporter+testsuitesTitle+\"\"Health#Garda Healthtech\"\":mocha-junit-reporter+mochaFile+${dateTime}:mochawesome+reportFilename+${dateTime}`,{stdio: 'inherit'})\"& node ./tests_explorer/utils/xml_data_time.js",
+    "staging-custom": "node -e \"require('datejs'); const dateTime = Date.today().setTimeToNow().toString('yyyyMMdd_HHmmss'); require('child_process').execSync(`cross-env NODE_ENV=staging mocha --timeout 180000 ./tests_explorer/test_case/%npm_config_testcasepath% --reporter mocha-multi-reporters --reporterOptions configFile=./config/configSTAGING.json,cmrOutput=mocha-junit-reporter+testsuitesTitle+\"\"Health#Garda Healthtech\"\":mocha-junit-reporter+mochaFile+${dateTime}:mochawesome+reportFilename+${dateTime}`,{stdio: 'inherit'})\"& node ./tests_explorer/utils/xml_data_time.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^3.2.0",
+    "chai": "^4.3.6",
+    "chai-http": "^4.3.0",
+    "cross-env": "^7.0.3",
+    "dateformat": "^4.5.1",
+    "datejs": "^1.0.0-rc3",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "faker": "^5.5.3",
+    "mocha": "^10.0.0",
+    "mocha-jenkins-reporter": "^0.4.6",
+    "mocha-junit-reporter": "^2.0.0",
+    "mocha-multi": "^1.1.3",
+    "mocha-multi-reporters": "^1.5.1",
+    "mochawesome": "^6.2.2",
+    "moment": "^2.29.1",
+    "mssql": "^7.0.0",
+    "node-encoder": "^2.0.4",
+    "path": "^0.12.7",
+    "tedious": "^11.0.8",
+    "urlencode": "^1.1.0",
+    "xlsx": "^0.17.0"
+  }
+}

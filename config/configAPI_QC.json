@@ -1,0 +1,16 @@
+{
+    "reporterEnabled": "mocha-junit-reporter, mochawesome",
+    "mochaJunitReporterReporterOptions": {
+        "outputs": "true",
+        "jenkinsMode": "true",
+        "rootSuiteTitle": "API",
+        "testsuitesTitle": "{id}",
+        "mochaFile": "./Reports/QC/API_QC_{id}.xml"
+    },
+    "mochawesomeReporterOptions": {
+        "reportDir": "./Reports/QC",
+        "reportFilename": "API_QC_{id}",
+        "reportTitle": "API_QC",
+        "reportPageTitle": "API_QC"
+    }
+}

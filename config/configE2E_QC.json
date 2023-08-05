@@ -1,0 +1,16 @@
+{
+    "reporterEnabled": "mocha-junit-reporter, mochawesome",
+    "mochaJunitReporterReporterOptions": {
+        "outputs": "true",
+        "jenkinsMode": "true",
+        "rootSuiteTitle": "E2E",
+        "testsuitesTitle": "{id}",
+        "mochaFile": "./Reports/QC/E2E_QC_{id}.xml"
+    },
+    "mochawesomeReporterOptions": {
+        "reportDir": "./Reports/QC",
+        "reportFilename": "E2E_QC_{id}",
+        "reportTitle": "E2E_QC",
+        "reportPageTitle": "E2E_QC"
+    }
+}
