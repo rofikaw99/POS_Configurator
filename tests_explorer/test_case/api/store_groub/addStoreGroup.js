@@ -40,6 +40,20 @@ describe("Test Suite Add Store Group", function () {
       console.log(response.body.data.id);
    });
 
+   it("Add Store Group with Existing Code Valid Code #20230806034400", async function () {
+      const dataStore = {
+        code: "ABB",
+        name: "Ara Yara",
+        note: null
+      };
+      
+      let response = await api_general.Add_StoreGroup(dataStore);
+      console.log(response.body);
+      response.should.have.status(422);
+      response.body.success.should.have.equal(false);
+      response.body.message.should.equal("<li>The code has already been taken.</li>");
+     });
+
    it("Add Store Group with Valid Code #20230806034400", async function () {
     const dataStore = {
       code: null,
@@ -51,5 +65,5 @@ describe("Test Suite Add Store Group", function () {
     console.log(response.body);
     response.should.have.status(422);
     response.body.success.should.have.equal(false);
- });
+   });
 });

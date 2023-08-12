@@ -90,6 +90,28 @@ function generateCityAndCode() {
   };
 }
 
+function generateRandomLocation() {
+  const streets = ["Main Street", "Oak Avenue", "Maple Lane", "Cedar Drive", "Elm Street"];
+  const cities = ["New York", "Los Angeles", "Chicago", "San Francisco", "Miami"];
+  const zips = ["10001", "90001", "60601", "94101", "33101"];
+  
+  const randomStreetIndex = Math.floor(Math.random() * streets.length);
+  const randomCityIndex = Math.floor(Math.random() * cities.length);
+  const randomZipIndex = Math.floor(Math.random() * zips.length);
+  
+  const street = streets[randomStreetIndex];
+  const city = cities[randomCityIndex];
+  const zip = zips[randomZipIndex];
+  
+  return { street, city, zip };
+}
+
+function generateRandomCountryCode() {
+  const countryCodes = ["US", "CA", "UK", "AU", "FR", "DE", "JP", "IT", "ES", "BR"];
+  const randomIndex = Math.floor(Math.random() * countryCodes.length);
+  return countryCodes[randomIndex];
+}
+
 module.exports = {
   randomString,
   randomNumber,
@@ -99,5 +121,7 @@ module.exports = {
   noKTP,
   birthDate,
   randomNumberByRange,
-  generateCityAndCode
+  generateCityAndCode,
+  generateRandomLocation,
+  generateRandomCountryCode
 }

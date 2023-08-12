@@ -16,11 +16,12 @@ describe("Test Suite Search Store Group", function () {
       let response = await api_general.Search_StoreGroup_Valid();
       console.log(response.body);
       response.should.have.status(200);
-      const i = response.body.recordsTotal - 1; 
+      const i = response.body.recordsFiltered - 1; 
       console.log(response.body.data[i]);
       expect(response.body.data[i]).to.have.property('id');
       expect(response.body.data[i]).to.have.property('code');
       expect(response.body.data[i]).to.have.property('name');
+      
    });
 
    it("Search Store Group with inValid Code #20230806020701", async function () {

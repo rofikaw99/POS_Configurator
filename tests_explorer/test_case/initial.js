@@ -15,6 +15,33 @@ async function Login_Yoshinoya() {
    global.token = response.body.access_token
 }
 
+async function setupSearchStoreGroupValid() {
+   let response = await api_general.Search_StoreGroup_Valid();
+   console.log(response.body);
+   response.should.have.status(200);
+   const i = response.body.recordsFiltered - 1; 
+   console.log(response.body.data[i]);
+   expect(response.body.data[i]).to.have.property('id');
+   expect(response.body.data[i]).to.have.property('code');
+   expect(response.body.data[i]).to.have.property('name');
+   global.storeGroupCode = response.body.data[i].code;
+   global.storeGroupCode2 = response.body.data[0].code;
+}
+
+async function setupSearchStoreValid() {
+   let response = await api_general.SearchStore();
+   console.log(response.body);
+   response.should.have.status(200);
+   const i = response.body.recordsFiltered - 1; 
+   console.log(response.body.data[i]);
+   expect(response.body.data[i]).to.have.property('id');
+   expect(response.body.data[i]).to.have.property('code');
+   expect(response.body.data[i]).to.have.property('name');
+   global.storeCode = response.body.data[i].code;
+}
+
 module.exports = {
-   Login_Yoshinoya
+   Login_Yoshinoya,
+   setupSearchStoreGroupValid,
+   setupSearchStoreValid
 }
