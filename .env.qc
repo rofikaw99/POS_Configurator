@@ -1,7 +1,7 @@
 BASE_URL=https://yoshinoya-api.akasia.id
 
 storeGroub_Code=JKT
-email=admin
+nama=icadoke
 password=123456
 InvalidCode=Invalid
 start_time=08:00

@@ -68,106 +68,163 @@ describe("Test Suite Create Discount", function () {
       let response = await api_general.AddDiscount(data);
       console.log(response.body)
       response.should.have.status(201);
-      response.body.code.should.have.equal(generatedData.code+screenID);
-      response.body.name.should.have.equal('Dine in '+generatedData.code);
+      response.body.code.should.have.equal("DISC"+generatedData.code+screenID);
+      response.body.name.should.have.equal("Discount "+ generatedData.code);
       response.body.screen_id.should.have.equal(screenID);
-      expect(response.body.stores[0].code).to.have.equal(oldCode);
     });
 
-    it("Create Discount with inactive status new Code should be success #20230807092500", async function () {
+    it("Create Discount with invalid format date #20230807092500", async function () {
+      console.log(generatedData.code);
       let responseCode = await api_general.GetScreen();
-      const screenID = responseCode.body[0].id;
+      const screenID = responseCode.body[0].id; 
+      console.log(responseCode.body[0].id)
       let responseCode2 = await api_general.SearchStore();
       const i = responseCode2.body.recordsFiltered - 1;
-      const oldCode = responseCode2.body.data[i].code;
+      const oldCode = responseCode2.body.data[i].code; 
       
 
-        const dataStore = {
-            code: generatedData.code,
-            name:"Dine in "+ generatedData.code,
-            screen_id: screenID,
-            is_active: true,
-            store_ids:[oldCode]
+        const data = {
+          code: "DISC"+generatedData.code+screenID+'1',
+          name:"Discount "+ generatedData.code,
+          start_date: formattedStartDate,
+          end_date: formattedEndDate+'1',
+          start_time: process.env.start_time,
+          end_time:process.env.end_time,
+          active_days:process.env.active_days,
+          screen_id: screenID,
+          min_amount: process.env.min_amount,
+          max_amount: process.env.max_amount,
+          discount_type: "1",
+          discount_percent: "20",
+          max_discount_percent_amount: randomNum1and100,
+          discount_amount: "0",
+          reference: "DEF123",
+          is_active: true,
+          combo_definition_ids:[],
+          payment_codes:[],
+          store_codes:[],
+          trans_type_codes:[]
         };
         
-        let response = await api_general.AddDiscount(dataStore);
-        response.should.have.status(201);
-        response.body.code.should.have.equal(generatedData.code);
-        response.body.name.should.have.equal('Dine in '+generatedData.code);
-        response.body.screen_id.should.have.equal(screenID);
-        expect(response.body.stores[0].code).to.have.equal(oldCode);
+        let response = await api_general.AddDiscount(data);
+        response.should.have.status(422);
+        response.body.errors.should.have.property(end_date);
       });
 
-      it("Create Discount with existing Code should be failure #20230807092500", async function () {
-        let responseCode1 = await api_general.GetDiscount();
-        const oldCode1 = responseCode1.body[0].code; 
-        let responseCode = await api_general.SearchStore();
-        const i = responseCode.body.recordsFiltered - 1;
-        const oldCode = responseCode.body.data[i].code;
-        let responseCode2 = await api_general.GetScreen();
-        const screenID = responseCode2.body[0].id; 
+      it("Create Discount with invalid time should be failure #20230807092500", async function () {
+        console.log(generatedData.code);
+        let responseCode = await api_general.GetScreen();
+        const screenID = responseCode.body[0].id; 
+        console.log(responseCode.body[0].id)
+        let responseCode2 = await api_general.SearchStore();
+        const i = responseCode2.body.recordsFiltered - 1;
+        const oldCode = responseCode2.body.data[i].code; 
   
         const dataStore = {
-            code: oldCode1,
-            name:"Dine in "+ generatedData.code,
-            screen_id: screenID,
-            is_active: true,
-            store_ids:[oldCode]
+          code: "DISC"+generatedData.code+screenID+'1',
+          name:"Discount "+ generatedData.code,
+          start_date: formattedStartDate,
+          end_date: formattedEndDate,
+          start_time: process.env.start_time,
+          end_time:process.env.end_time,
+          active_days:process.env.active_days,
+          screen_id: screenID,
+          min_amount: process.env.min_amount,
+          max_amount: '25:00',
+          discount_type: "1",
+          discount_percent: "20",
+          max_discount_percent_amount: randomNum1and100,
+          discount_amount: "0",
+          reference: "DEF123",
+          is_active: true,
+          combo_definition_ids:[],
+          payment_codes:[],
+          store_codes:[],
+          trans_type_codes:[]
         };
         
         let response = await api_general.AddDiscount(dataStore);
         response.should.have.status(422);
         response.body.should.have.property('errors');
-        response.body.errors.should.have.property('code');
-        response.body.errors.code[0].should.have.equal('The code has already been taken.');
+        response.body.errors.should.have.property('end_time');
+        response.body.errors.end_time.should.have.equal('The end time does not match the format H:i.');
       });
 
-      it("Create Discount with new Code but the data is empty should be failure #20230807092500", async function () { 
+      it("Create Discount with end_time more early than start time should be failure #20230807092500", async function () { 
+        console.log(generatedData.code);
+        let responseCode = await api_general.GetScreen();
+        const screenID = responseCode.body[0].id; 
+        console.log(responseCode.body[0].id)
+        let responseCode2 = await api_general.SearchStore();
+        const i = responseCode2.body.recordsFiltered - 1;
+        const oldCode = responseCode2.body.data[i].code; 
   
         const dataStore = {
-          code:generatedData.code+3,
-          name:null,
-          screen_id: null,
-          is_active: null,
-          store_ids:null
+          code: "DISC"+generatedData.code+screenID+'1',
+          name:"Discount "+ generatedData.code,
+          start_date: formattedStartDate,
+          end_date: formattedEndDate,
+          start_time: process.env.end_time,
+          end_time:process.env.start_time,
+          active_days:process.env.active_days,
+          screen_id: screenID,
+          min_amount: process.env.min_amount,
+          max_amount: process.env.max_amount,
+          discount_type: "1",
+          discount_percent: "20",
+          max_discount_percent_amount: randomNum1and100,
+          discount_amount: "0",
+          reference: "DEF123",
+          is_active: true,
+          combo_definition_ids:[],
+          payment_codes:[],
+          store_codes:[],
+          trans_type_codes:[]
         };
         
         let response = await api_general.AddDiscount(dataStore);
         response.should.have.status(422);
         response.body.should.have.property('errors');
-        // expect(response.body.errors.is_active[0]).to.have.equal('The is active field must be true or false.');
-        // expect(response.body.errors.code[0]).to.have.equal('The code has already been taken.');
-        // expect(response.body.errors.name[0]).to.have.equal('The name field is required.');
-        // expect(response.body.errors.screen_id[0]).to.have.equal('The screen id field is required.');
-        // expect(response.body.errors.store_ids[0]).to.have.equal('The store ids field is required.');
+        response.body.errors.should.have.property('end_time');
+        response.body.errors.end_time.should.have.equal('The end time must be a date after start time.');
       });
 
-      it("Create Discount with existing Code but the data is empty should be failure #20230807092500", async function () {
-        let responseCode1 = await api_general.GetDiscount();
-        const oldCode1 = responseCode1.body[0].code; 
-        let responseCode = await api_general.SearchStore();
-        const i = responseCode.body.recordsFiltered - 1;
-        const oldCode = responseCode.body.data[i].code; 
-        let responseCode2 = await api_general.GetScreen();
-        const screenID = responseCode2.body[0].id; 
+      it("Create Discount with invalid screen id should be failure #20230807092500", async function () {
+        console.log(generatedData.code);
+        let responseCode = await api_general.GetScreen();
+        const screenID = responseCode.body[0].id; 
+        console.log(responseCode.body[0].id)
+        let responseCode2 = await api_general.SearchStore();
+        const i = responseCode2.body.recordsFiltered - 1;
+        const oldCode = responseCode2.body.data[i].code; 
   
         const dataStore = {
-            code:generatedData.code+3,
-            name:null,
-            screen_id: null,
-            is_active: null,
-            store_ids:null
+          code: "DISC"+generatedData.code+screenID+'1',
+          name:"Discount "+ generatedData.code,
+          start_date: formattedStartDate,
+          end_date: formattedEndDate,
+          start_time: process.env.end_time,
+          end_time:process.env.start_time,
+          active_days:process.env.active_days,
+          screen_id: '8',
+          min_amount: process.env.min_amount,
+          max_amount: process.env.max_amount,
+          discount_type: "1",
+          discount_percent: "20",
+          max_discount_percent_amount: randomNum1and100,
+          discount_amount: "0",
+          reference: "DEF123",
+          is_active: true,
+          combo_definition_ids:[],
+          payment_codes:[],
+          store_codes:[],
+          trans_type_codes:[]
         };
         
-        let v = 0;
         let response = await api_general.AddDiscount(dataStore);
         response.should.have.status(422);
         response.body.should.have.property('errors');
-        console.log(response.body)
-        // response.body.errors.should.have.property('code');
-        // response.body.errors.should.have.property('name');
-        // response.body.errors.should.have.property('screen_id');
-        // response.body.errors.should.have.property('is_active');
-        // response.body.errors.should.have.property('store_ids');
+        response.body.errors.should.have.property('screen_id');
+        response.body.errors.end_time.should.have.equal('The selected screen id is invalid.');
       });
 });
