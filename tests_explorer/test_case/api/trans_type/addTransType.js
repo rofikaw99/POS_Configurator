@@ -18,26 +18,20 @@ const phone = phoneNumber08();
 
 
 
-describe("Test Suite Create Trans Type", function () {
+describe("Test Suite Create SFG Group", function () {
    before(async function () {
       await initial.Login_Yoshinoya();
    });
 
-   it("Create Trans Type with active status new Code should be success #20230807092500", async function () {
+   it("Create SFG Group with active status new Code should be success #20230807092500", async function () {
         console.log(generatedData.code);
-        let responseCode = await api_general.GetScreen();
-        const screenID = responseCode.body[0].id; 
-        console.log(responseCode.body[0].id)
-        let responseCode2 = await api_general.SearchStore();
-        const i = responseCode2.body.recordsFiltered - 1;
-        const oldCode = responseCode2.body.data[i].code; 
 
       const dataItem = {
         code: generatedData.code+screenID,
-        name:"Dine in "+ generatedData.code,
-        screen_id: screenID,
+        name:"SFG "+ generatedData.code,
+        note: screenID,
         is_active: true,
-        store_ids:[oldCode]
+        general_product_ids:[2]
       };
       console.log(dataItem)
       
@@ -50,7 +44,7 @@ describe("Test Suite Create Trans Type", function () {
       expect(response.body.stores[0].code).to.have.equal(oldCode);
     });
 
-    it("Create Trans Type with inactive status new Code should be success #20230807092500", async function () {
+    it("Create SFG Group with inactive status new Code should be success #20230807092500", async function () {
       let responseCode = await api_general.GetScreen();
       const screenID = responseCode.body[0].id;
       let responseCode2 = await api_general.SearchStore();
@@ -74,7 +68,7 @@ describe("Test Suite Create Trans Type", function () {
         expect(response.body.stores[0].code).to.have.equal(oldCode);
       });
 
-      it("Create Trans Type with existing Code should be failure #20230807092500", async function () {
+      it("Create SFG Group with existing Code should be failure #20230807092500", async function () {
         let responseCode1 = await api_general.GetTransType();
         const oldCode1 = responseCode1.body[0].code; 
         let responseCode = await api_general.SearchStore();
@@ -98,7 +92,7 @@ describe("Test Suite Create Trans Type", function () {
         response.body.errors.code[0].should.have.equal('The code has already been taken.');
       });
 
-      it("Create Trans Type with new Code but the data is empty should be failure #20230807092500", async function () { 
+      it("Create SFG Group with new Code but the data is empty should be failure #20230807092500", async function () { 
   
         const dataStore = {
           code:generatedData.code+3,
@@ -118,7 +112,7 @@ describe("Test Suite Create Trans Type", function () {
         // expect(response.body.errors.store_ids[0]).to.have.equal('The store ids field is required.');
       });
 
-      it("Create Trans Type with existing Code but the data is empty should be failure #20230807092500", async function () {
+      it("Create SFG Group with existing Code but the data is empty should be failure #20230807092500", async function () {
         let responseCode1 = await api_general.GetTransType();
         const oldCode1 = responseCode1.body[0].code; 
         let responseCode = await api_general.SearchStore();

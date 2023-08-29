@@ -217,6 +217,18 @@ class general extends ApiBase {                                                 
             .set('content-type', 'application/json')    
             .set('authorization', 'Bearer ' + global.bearerToken)     
     }
+
+    GetSFGGroup() {                                                    // Sesuaikan nama function dengan nama API, parameternya disesuaikan juga
+        return this.endpoint.get('/api/sfg-group?orderBy=<string>&orderDirection=<string>')                                       // Sesuaikan dengan path URL API nya    
+            .set('authorization', 'Bearer ' + global.bearerToken)     
+    }
+
+    AddSFGGroup(data) {                                                   
+        return this.endpoint.post('/api/sfg-group')                                       // Sesuaikan dengan path URL API nya
+            .set('content-type', 'application/json')    
+            .set('authorization', 'Bearer ' + global.bearerToken) 
+            .send(data);      
+    }
 }
 
 module.exports = general                                                                   
